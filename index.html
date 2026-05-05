@@ -1,0 +1,1982 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Vit-Hit — Resultados de encuesta — Samplia</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    :root {
+      --econ-red: #E3120B;
+      --econ-red-dark: #B30D08;
+      --econ-red-light: rgba(227, 18, 11, .07);
+      --econ-red-mid: rgba(227, 18, 11, .14);
+      --white: #ffffff;
+      --bg: #f2f2f2;
+      --bg-card: #ffffff;
+      --border: rgba(0, 0, 0, .1);
+      --border-strong: rgba(0, 0, 0, .18);
+      --text-primary: #1a1a1a;
+      --text-secondary: #4d4d4d;
+      --text-tertiary: #808080;
+      --green: #006d4e;
+      --green-light: rgba(0, 109, 78, .08);
+      --red: #c0392b;
+      --red-light: rgba(192, 57, 43, .08);
+      --amber: #c22400;
+      --amber-light: rgba(194, 114, 0, .08);
+      --blue: #0d6fbb;
+      --blue-light: rgba(13, 111, 187, .08);
+      --shadow-xs: 0 1px 2px rgba(0, 0, 0, .06);
+      --shadow-sm: 0 1px 4px rgba(0, 0, 0, .08);
+      --shadow-md: 0 4px 12px rgba(0, 0, 0, .08);
+      --shadow-lg: 0 8px 24px rgba(0, 0, 0, .1);
+      --r-xs: 4px;
+      --r-sm: 6px;
+      --r-md: 8px;
+      --r-lg: 12px;
+      --r-xl: 16px;
+      --r-full: 999px;
+      --serif: 'Poppins', sans-serif;
+      --sans: 'Poppins', sans-serif;
+    }
+
+    html {
+      font-size: 16px;
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased
+    }
+
+    /* SCROLL PROGRESS */
+    #scrollProgress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 0%;
+      height: 3px;
+      background: var(--econ-red);
+      z-index: 2000;
+      transition: width .1s linear
+    }
+
+    /* NAV */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 255, 255, .92);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px
+    }
+
+    .nav-logo {
+      height: 28px;
+      display: block;
+      opacity: .9
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .live-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10.5px;
+      font-weight: 600;
+      letter-spacing: .03em;
+      color: var(--econ-red);
+      background: var(--econ-red-light);
+      padding: 4px 10px;
+      border-radius: var(--r-full)
+    }
+
+    .live-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: var(--econ-red);
+      animation: pulse 1.6s ease-in-out infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+        transform: scale(1)
+      }
+
+      50% {
+        opacity: .3;
+        transform: scale(.7)
+      }
+    }
+
+    .last-update {
+      font-size: 10.5px;
+      color: var(--text-tertiary);
+      cursor: pointer;
+      font-variant-numeric: tabular-nums
+    }
+
+    .last-update:hover {
+      color: var(--text-secondary)
+    }
+
+    /* HERO */
+    .hero {
+      background: var(--white);
+      border-bottom: 3px solid var(--econ-red);
+      padding: 32px 24px 28px
+    }
+
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 24px;
+      flex-wrap: wrap
+    }
+
+    .hero-left {
+      flex: 1;
+      min-width: 240px
+    }
+
+    .hero-eyebrow {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--econ-red);
+      margin-bottom: 6px
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(24px, 4vw, 36px);
+      font-weight: 700;
+      letter-spacing: -.01em;
+      line-height: 1.15;
+      color: var(--text-primary)
+    }
+
+    .hero-sub {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      font-weight: 400;
+      font-style: normal;
+      font-family: var(--serif)
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      background: var(--bg);
+      border-left: 3px solid var(--econ-red);
+      padding: 12px 16px;
+      min-width: 220px
+    }
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11.5px;
+      color: var(--text-secondary)
+    }
+
+    .meta-row svg {
+      flex-shrink: 0;
+      opacity: .45
+    }
+
+    .meta-row strong {
+      font-weight: 600;
+      color: var(--text-primary)
+    }
+
+    /* MAIN */
+    .main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 28px 24px 56px
+    }
+
+    /* SECTION */
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 36px 0 14px
+    }
+
+    .section-header:first-child {
+      margin-top: 0
+    }
+
+    .section-dot {
+      width: 8px;
+      height: 8px;
+      background: var(--econ-red);
+      flex-shrink: 0
+    }
+
+    .section-title {
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--text-tertiary)
+    }
+
+    .section-line {
+      flex: 1;
+      height: 1px;
+      background: var(--border)
+    }
+
+    /* CARDS */
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow-xs);
+      overflow: hidden
+    }
+
+    .card-inner {
+      padding: 20px
+    }
+
+    .card-header {
+      margin-bottom: 14px
+    }
+
+    .card-label {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 3px
+    }
+
+    .card-question {
+      font-family: var(--serif);
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      font-weight: 400;
+      font-style: normal
+    }
+
+    /* KPI */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 16px 14px;
+      box-shadow: var(--shadow-xs);
+      position: relative;
+      overflow: hidden;
+      transition: box-shadow .2s, transform .2s
+    }
+
+    .kpi-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px)
+    }
+
+    .kpi-card-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px
+    }
+
+    .kpi-label {
+      font-family: var(--sans);
+      font-size: 9.5px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--text-tertiary);
+      margin-bottom: 8px
+    }
+
+    .kpi-value {
+      font-family: var(--serif);
+      font-size: clamp(22px, 3.5vw, 30px);
+      font-weight: 700;
+      letter-spacing: -.02em;
+      line-height: 1
+    }
+
+    .kpi-sub {
+      font-size: 10.5px;
+      color: var(--text-secondary);
+      margin-top: 5px
+    }
+
+    .bench-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-family: var(--sans);
+      font-size: 9.5px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: var(--r-full);
+      margin-top: 5px
+    }
+
+    .bench-tag.up {
+      background: var(--green-light);
+      color: var(--green)
+    }
+
+    .bench-tag.down {
+      background: var(--red-light);
+      color: var(--red)
+    }
+
+    /* FILTER */
+    .filter-bar {
+      background: rgba(255, 255, 255, 0.75);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      border-radius: var(--r-full);
+      padding: 5px 5px 5px 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 60px;
+      z-index: 90;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .filter-bar.is-sticky {
+      box-shadow: var(--shadow-md)
+    }
+
+    .filter-label {
+      font-family: var(--sans);
+      font-size: 9.5px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      white-space: nowrap
+    }
+
+    .filter-sep {
+      width: 1px;
+      height: 16px;
+      background: var(--border);
+      flex-shrink: 0
+    }
+
+    .filter-select {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--text-primary);
+      background: rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: var(--r-full);
+      padding: 5px 26px 5px 11px;
+      appearance: none;
+      outline: none;
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 10 10'%3E%3Cpath fill='%23808080' d='M5 7L1 3h8z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 9px center;
+      transition: border-color .15s
+    }
+
+    .filter-select:focus {
+      border-color: var(--econ-red)
+    }
+
+    /* CHARTS */
+    .chart-wrap {
+      position: relative;
+      width: 100%
+    }
+
+    .h180 {
+      height: clamp(140px, 22vw, 180px)
+    }
+
+    .h220 {
+      height: clamp(160px, 26vw, 220px)
+    }
+
+    .h260 {
+      height: clamp(180px, 30vw, 260px)
+    }
+
+    .h300 {
+      height: clamp(200px, 34vw, 300px)
+    }
+
+    .h320 {
+      height: clamp(240px, 36vw, 340px)
+    }
+
+    .chart-note {
+      font-size: 10.5px;
+      color: var(--text-tertiary);
+      margin-top: 6px;
+      text-align: center;
+      line-height: 1.4
+    }
+
+    /* GRIDS */
+    .g2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px
+    }
+
+    .g-custom-split {
+      display: grid;
+      grid-template-columns: .75fr 1.25fr;
+      gap: 10px
+    }
+
+    @media (max-width: 900px) {
+
+      .g2,
+      .g-custom-split {
+        grid-template-columns: 1fr
+      }
+    }
+
+    /* MINI STATS */
+    .mini-stat {
+      background: var(--bg);
+      border-radius: var(--r-sm);
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px
+    }
+
+    .mini-label {
+      font-family: var(--sans);
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-tertiary)
+    }
+
+    .mini-value {
+      font-family: var(--serif);
+      font-size: clamp(13px, 2.2vw, 16px);
+      font-weight: 700;
+      letter-spacing: -.01em
+    }
+
+    .mini-value.green {
+      color: var(--green)
+    }
+
+    .mini-value.red {
+      color: var(--red)
+    }
+
+    .mini-value.amber {
+      color: var(--amber)
+    }
+
+    .mini-value.blue {
+      color: var(--blue)
+    }
+
+    .mini-value.econ {
+      color: var(--econ-red)
+    }
+
+    /* LEADERBOARD */
+    .lb-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 6px
+    }
+
+    .lb-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: var(--r-md);
+      transition: all .2s;
+      margin-bottom: 8px;
+      box-shadow: var(--shadow-xs)
+    }
+
+    .lb-row:hover {
+      background: var(--bg);
+      transform: translateX(4px);
+      box-shadow: var(--shadow-sm)
+    }
+
+    .lb-rank {
+      font-family: var(--serif);
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text-tertiary);
+      min-width: 24px;
+      opacity: .4;
+      font-style: normal
+    }
+
+    .lb-rank.top {
+      opacity: 1;
+      color: var(--econ-red)
+    }
+
+    .lb-label {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-primary)
+    }
+
+    .lb-bar-track {
+      flex: 0 0 40%;
+      height: 10px;
+      background: rgba(0, 0, 0, .04);
+      border-radius: var(--r-full);
+      overflow: hidden;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.05)
+    }
+
+    .lb-bar-fill {
+      height: 100%;
+      border-radius: var(--r-full);
+      background: var(--econ-red);
+      transition: width .8s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative
+    }
+
+    .lb-bar-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(rgba(255, 255, 255, 0.2), transparent);
+    }
+
+    .lb-pct {
+      font-family: var(--serif);
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-primary);
+      min-width: 42px;
+      text-align: right
+    }
+
+    /* INSIGHTS */
+    .insight-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px
+    }
+
+    .insight-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--r-lg);
+      padding: 18px;
+      box-shadow: var(--shadow-xs);
+      transition: box-shadow .2s, transform .2s;
+      border-top: 3px solid var(--econ-red)
+    }
+
+    .insight-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px)
+    }
+
+    .insight-title {
+      font-family: var(--serif);
+      font-size: 13px;
+      font-weight: 700;
+      margin-bottom: 6px
+    }
+
+    .insight-body {
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--text-secondary)
+    }
+
+    .insight-body strong {
+      color: var(--econ-red);
+      font-weight: 700
+    }
+
+    /* RATING PREMIUM */
+    .rating-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+      gap: 10px;
+    }
+
+    .rating-mini {
+      flex: 1;
+      background: rgba(0, 0, 0, .03);
+      padding: 8px 4px;
+      border-radius: var(--r-sm);
+      text-align: center;
+    }
+
+    .rating-mini-val {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-primary);
+      display: block;
+    }
+
+    .rating-mini-label {
+      font-size: 8px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .02em;
+      color: var(--text-tertiary);
+    }
+
+    .rating-legend {
+      display: flex;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+
+    .leg-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .leg-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+    }
+
+    .lb-row.stacked {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 10px;
+      padding: 14px 16px;
+      height: auto
+    }
+
+    .lb-top {
+      display: none;
+      align-items: center;
+      gap: 8px;
+      width: 100%
+    }
+
+    .lb-row.stacked .lb-top {
+      display: flex
+    }
+
+    .lb-row.stacked .lb-rank {
+      min-width: unset;
+      margin-right: 4px
+    }
+
+    .lb-row.stacked .lb-label {
+      flex: 1;
+      white-space: normal;
+      line-height: 1.3
+    }
+
+    .lb-row.stacked .lb-pct {
+      margin-left: auto;
+      font-family: var(--serif);
+      font-weight: 800;
+      color: var(--text-primary);
+      font-size: 14px
+    }
+
+    .lb-row.stacked .lb-bar-track {
+      flex: none;
+      width: 100%;
+      height: 12px;
+      margin-top: 4px
+    }
+
+    /* MEDIA */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px
+    }
+
+    .photo-card {
+      position: relative;
+      border-radius: var(--r-md);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      cursor: pointer;
+      background: var(--bg);
+      transition: transform .2s, box-shadow .2s
+    }
+
+    .photo-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-md)
+    }
+
+    .photo-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .3s
+    }
+
+    .photo-card:hover img {
+      transform: scale(1.04)
+    }
+
+    .zoom-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background .2s
+    }
+
+    .photo-card:hover .zoom-overlay {
+      background: rgba(0, 0, 0, .3)
+    }
+
+    .zoom-btn {
+      width: 32px;
+      height: 32px;
+      background: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(.6);
+      transition: opacity .2s, transform .25s;
+      color: var(--econ-red)
+    }
+
+    .photo-card:hover .zoom-btn {
+      opacity: 1;
+      transform: scale(1)
+    }
+
+    /* LIGHTBOX */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, .85);
+      z-index: 2000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      transition: opacity .25s
+    }
+
+    .lightbox.active {
+      display: flex;
+      opacity: 1
+    }
+
+    .lightbox-content {
+      position: relative;
+      transform: scale(.9);
+      transition: transform .3s
+    }
+
+    .lightbox.active .lightbox-content {
+      transform: scale(1)
+    }
+
+    .lightbox-content img {
+      max-width: 94vw;
+      max-height: 88vh;
+      border-radius: var(--r-md);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, .4)
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      background: rgba(255, 255, 255, .12);
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: var(--r-full);
+      font-family: var(--sans);
+      font-size: 11px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      transition: background .2s
+    }
+
+    .lightbox-close:hover {
+      background: rgba(255, 255, 255, .22)
+    }
+
+    /* FOOTER */
+    .footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 40px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border)
+    }
+
+    .footer-info {
+      font-size: 10.5px;
+      color: var(--text-tertiary)
+    }
+
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--econ-red);
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      padding: 8px 16px;
+      border-radius: var(--r-sm);
+      border: none;
+      cursor: pointer;
+      transition: background .15s, transform .1s;
+      box-shadow: var(--shadow-sm)
+    }
+
+    .btn-primary:hover {
+      background: var(--econ-red-dark);
+      transform: translateY(-1px)
+    }
+
+    /* ERROR */
+    #dataBanner {
+      position: fixed;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 999;
+      background: var(--text-primary);
+      color: #fff;
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 500;
+      padding: 12px 16px;
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      max-width: 92vw
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg)
+      }
+
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    /* RESPONSIVE */
+    @media(max-width:1024px) {
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .insight-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+    }
+
+    @media(max-width:768px) {
+      .nav {
+        padding: 0 16px
+      }
+
+      .hero {
+        padding: 24px 16px 20px
+      }
+
+      .main {
+        padding: 20px 16px 48px
+      }
+
+      .g2 {
+        grid-template-columns: 1fr
+      }
+
+      .photo-grid {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .last-update {
+        display: none
+      }
+
+      .filter-bar {
+        border-radius: var(--r-lg);
+        top: 52px
+      }
+
+      .filter-sep {
+        display: none
+      }
+
+      .filter-select {
+        flex: 1
+      }
+    }
+
+    @media(max-width:520px) {
+      .kpi-grid {
+        grid-template-columns: 1fr 1fr
+      }
+
+      .insight-grid {
+        grid-template-columns: 1fr
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div id="scrollProgress"></div>
+
+  <nav class="nav">
+    <img class="nav-logo" src="https://samplia.com/assets/img/Samplia.svg" alt="Samplia" />
+    <div class="nav-right">
+      <div class="live-badge">
+        <div class="live-dot"></div>En vivo
+      </div>
+      <span class="last-update" id="lastUpdate">Cargando…</span>
+    </div>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-eyebrow">Resultados de encuesta · Samplia</div>
+        <div class="hero-title">Vit-Hit</div>
+        <div class="hero-sub">Resultados de encuesta a quienes probaron el producto</div>
+      </div>
+      <div class="hero-meta">
+        <div class="meta-row"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+            <circle cx="12" cy="10" r="3" />
+          </svg><span><strong>Samplia Circuito de máquinas</strong> · Madrid y Barcelona</span></div>
+        <div class="meta-row"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+            <line x1="16" y1="2" x2="16" y2="6" />
+            <line x1="8" y1="2" x2="8" y2="6" />
+            <line x1="3" y1="10" x2="21" y2="10" />
+          </svg><span>Hasta el <strong>13 de abril de 2026</strong></span></div>
+        <div class="meta-row"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M20 12v10H4V12" />
+            <path d="M2 7h20v5H2z" />
+          </svg><span>Total Sampling: <strong>29.436</strong></span></div>
+      </div>
+    </div>
+  </div>
+
+  <main class="main">
+    <!-- KPI -->
+    <div class="kpi-grid" style="margin-bottom:10px;">
+      <div class="kpi-card">
+        <div class="kpi-label">Encuestados</div>
+        <div class="kpi-value" id="kpiTotal">—</div>
+        <div class="kpi-sub" id="kpiTotalSub">—</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Conocimiento previo</div>
+        <div class="kpi-value" style="color:var(--blue)" id="kpiKnew">—</div>
+        <div class="kpi-sub">No lo conocían</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Comprarían</div>
+        <div class="kpi-value" style="color:var(--green)" id="kpiCompra">—</div>
+        <div class="kpi-sub">Sí, lo compraré</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-label">Valoración media</div>
+        <div class="kpi-value" style="color:var(--amber)" id="kpiScore">—</div>
+        <div id="kpiBenchScore"></div>
+        <div class="kpi-sub">Escala 1–10</div>
+      </div>
+    </div>
+
+    <!-- FILTERS -->
+    <div class="section-header" style="margin-top:32px">
+      <div class="section-dot"></div>
+      <div class="section-title">Demográficos</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="filter-bar" style="margin-bottom:14px;">
+      <span class="filter-label">Filtrar</span>
+      <div class="filter-sep"></div>
+      <span class="filter-label" style="font-size:9px">Género</span>
+      <select class="filter-select" id="fGender">
+        <option value="">Todos</option>
+        <option value="F">Femenino</option>
+        <option value="M">Masculino</option>
+      </select>
+      <div class="filter-sep"></div>
+      <span class="filter-label" style="font-size:9px">Edad</span>
+      <select class="filter-select" id="fAge">
+        <option value="">Todos</option>
+        <option value="18-24">18–24</option>
+        <option value="25-34">25–34</option>
+        <option value="35-44">35–44</option>
+        <option value="45-54">45–54</option>
+        <option value="55-64">55–64</option>
+        <option value="65+">65+</option>
+      </select>
+      <div class="filter-sep"></div>
+      <span class="filter-label" style="font-size:9px">Sabor</span>
+      <select class="filter-select" id="fSabor">
+        <option value="">Todos</option>
+      </select>
+    </div>
+
+    <!-- GENDER + AGE -->
+    <div class="g2" style="margin-bottom:10px;">
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-label">Distribución por género</div>
+          </div>
+          <div class="chart-wrap h260"><canvas id="chartGenero"></canvas></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-inner">
+          <div class="card-header">
+            <div class="card-label">Distribución por rango de edad</div>
+          </div>
+          <div style="display:flex;gap:10px;align-items:flex-start">
+            <div style="display:flex;flex-direction:column;gap:6px;min-width:85px;flex-shrink:0">
+              <div class="mini-stat">
+                <div class="mini-label">Edad promedio</div>
+                <div class="mini-value econ" id="edadMediaValue">—</div>
+              </div>
+              <div class="mini-stat">
+                <div class="mini-label">Moda de la edad</div>
+                <div class="mini-value econ" id="edadModaValue">—</div>
+              </div>
+            </div>
+            <div class="chart-wrap h260" style="flex:1;min-width:0"><canvas id="chartEdad"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHARTS — each question gets its own card -->
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Experiencia con el producto</div>
+      <div class="section-line"></div>
+    </div>
+    <div id="chartsContainer"></div>
+
+    <!-- INSIGHTS -->
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Insights de negocio</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="insight-grid" style="margin-bottom:10px;">
+      <div class="insight-card">
+        <div class="insight-title">Intención de compra</div>
+        <div class="insight-body" id="insightCompra">—</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-title">Valoración del producto</div>
+        <div class="insight-body" id="insightScore">—</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-title">Conocimiento de marca</div>
+        <div class="insight-body" id="insightBrand">—</div>
+      </div>
+      <div class="insight-card">
+        <div class="insight-title">Perfil del consumidor</div>
+        <div class="insight-body" id="insightProfile">—</div>
+      </div>
+    </div>
+
+    <!-- MEDIA -->
+    <div class="section-header">
+      <div class="section-dot"></div>
+      <div class="section-title">Media de la campaña</div>
+      <div class="section-line"></div>
+    </div>
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-inner">
+        <div class="card-label" style="margin-bottom:10px">Video de la campaña</div>
+        <div class="photo-card" style="aspect-ratio:16/9;max-width:740px;margin:0 auto"
+          onclick="window.open('https://youtu.be/0mryG9O74GM?si=uTh4TDJ8BIlmTaKr','_blank')">
+          <img src="https://img.youtube.com/vi/0mryG9O74GM/hqdefault.jpg" alt="Video"
+            onerror="this.style.background='var(--bg)'">
+          <div class="zoom-overlay" style="background:rgba(0,0,0,.1);opacity:1">
+            <div class="zoom-btn" style="opacity:1;transform:scale(1);width:48px;height:48px"><svg
+                xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="currentColor"
+                style="margin-left:2px">
+                <path d="M8 5v14l11-7z" />
+              </svg></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card" style="margin-bottom:10px">
+      <div class="card-inner">
+        <div class="card-label" style="margin-bottom:10px">Fotos de la campaña</div>
+        <div class="photo-grid">
+          <div class="photo-card"
+            onclick="openLightbox('https://lh3.googleusercontent.com/d/1UVSFYopmcUMunDTJTmmzIyDVoTw9b9nb')"><img
+              src="https://lh3.googleusercontent.com/d/1UVSFYopmcUMunDTJTmmzIyDVoTw9b9nb" alt="1" loading="lazy">
+            <div class="zoom-overlay">
+              <div class="zoom-btn"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg></div>
+            </div>
+          </div>
+          <div class="photo-card"
+            onclick="openLightbox('https://lh3.googleusercontent.com/d/1lQSJpJJfwFts5wac__omd9ryywvFIoM1')"><img
+              src="https://lh3.googleusercontent.com/d/1lQSJpJJfwFts5wac__omd9ryywvFIoM1" alt="2" loading="lazy">
+            <div class="zoom-overlay">
+              <div class="zoom-btn"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg></div>
+            </div>
+          </div>
+          <div class="photo-card"
+            onclick="openLightbox('https://lh3.googleusercontent.com/d/1zeXiesQgkPbEQb3gOWpcja96t7IK5KnA')"><img
+              src="https://lh3.googleusercontent.com/d/1zeXiesQgkPbEQb3gOWpcja96t7IK5KnA" alt="3" loading="lazy">
+            <div class="zoom-overlay">
+              <div class="zoom-btn"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg></div>
+            </div>
+          </div>
+          <div class="photo-card"
+            onclick="openLightbox('https://lh3.googleusercontent.com/d/1iQk27FjiKJ9ezi66dFWzBPxNGvXyiIYc')"><img
+              src="https://lh3.googleusercontent.com/d/1iQk27FjiKJ9ezi66dFWzBPxNGvXyiIYc" alt="4" loading="lazy">
+            <div class="zoom-overlay">
+              <div class="zoom-btn"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+                  fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="11" cy="11" r="8" />
+                  <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                </svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span class="footer-info" id="footerInfo">Total encuestados: — · Vit-Hit · Samplia</span>
+      <button class="btn-primary" id="downloadPdfBtn"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+          stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="7 10 12 15 17 10" />
+          <line x1="12" y1="15" x2="12" y2="3" />
+        </svg>Descargar PDF</button>
+    </div>
+  </main>
+
+  <div id="lightbox" class="lightbox">
+    <div class="lightbox-content"><button class="lightbox-close" onclick="closeLightbox()"><svg
+          xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="18" y1="6" x2="6" y2="18" />
+          <line x1="6" y1="6" x2="18" y2="18" />
+        </svg>Cerrar</button><img id="lightboxImg" src="" alt="Ampliada"></div>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    Chart.defaults.font.family = "'Poppins',sans-serif";
+    const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRkqJSDW8u4iBYfWGEfQLzmAWOruDAInAyH2thZ9slJZSNRkZfKf_niXyAJTNVCLRQuoa5OkVHEybr-/pub?gid=1781131945&single=true&output=csv';
+    const HTML_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRkqJSDW8u4iBYfWGEfQLzmAWOruDAInAyH2thZ9slJZSNRkZfKf_niXyAJTNVCLRQuoa5OkVHEybr-/pubhtml?gid=1781131945&single=true';
+    const TOTAL_SAMPLINGS = 29436; const BENCH_SCORE = 7.5;
+    let allRows = [], allHeaders = [], charts = {}, CI = {};
+
+    // Economist-inspired chart palettes
+    const PAL_RED = ['#E3120B', '#c0392b', '#e74c3c', '#f1948a', '#f5b7b1', '#fadbd8'];
+    const PAL_ECON = ['#E3120B', '#0d6fbb', '#006d4e', '#c27200', '#6c3483', '#1a5276', '#784212', '#117a65'];
+    const PAL_BLUE = ['#0d6fbb', '#2e86c1', '#5dade2', '#85c1e9', '#aed6f1', '#d4e6f1'];
+
+    // ── QUESTION DEFINITIONS (column header → chart type) ──
+    const QUESTIONS = [
+      { header: 'Antes de obtener la muestra de Vit-Hit, ¿Conocías este producto que has probado con Samplia?', type: 'bar', label: 'Conocimiento previo' },
+      { header: '¿Con qué frecuencia has probado o comprado Vit-Hit anteriormente?', type: 'bar', label: 'Frecuencia de consumo' },
+      { header: '¿Qué sabor has probado de Vit-Hit?', type: 'leaderboard', label: 'Sabor probado previo a la activación' },
+      { header: '¿Qué sabor has probado de Vit-Hit en esta activación?', type: 'leaderboard', label: 'Sabor probado en activación' },
+      { header: '¿Qué te ha parecido el producto Vit-Hit que has probado con Samplia?', type: 'leaderboard', label: 'Opinión del producto' },
+      { header: 'Tras probarlo ¿Cuál es tu valoración general?', type: 'vbar', label: 'Valoración general' },
+      { header: '¿Qué características buscas en una bebida funcional como Vit-Hit?', type: 'bar', label: 'Características buscadas' },
+      { header: '¿Puedes decirnos cuál?', type: 'bar', label: 'Detalle adicional' },
+      { header: '¿Qué tan importante es para ti que una bebida te aporte refuerzo inmunitario, funcionalidad y bienestar?', type: 'bar', label: 'Importancia funcional' },
+      { header: '¿Cuán probable es que compres la bebida Vit-Hit la próxima vez que vayas a la tienda o al super?', type: 'leaderboard', label: 'Intención de compra' },
+      { header: '¿Hay algo que no te haya gustado?', type: 'bar', label: 'Aspectos negativos' },
+      { header: '¿Recomendarías a un amigo o familiar comprar los productos Huesitos?', type: 'vbar', label: 'Recomendación' },
+    ];
+
+    // ── HELPERS ──
+    function destroyChart(id) { if (charts[id]) { charts[id].destroy(); delete charts[id] } }
+    function pct(n, t) { return t > 0 ? Math.round(n / t * 100) : 0 }
+    function norm(v) { return (v || '').toString().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^\w\s,.]/g, ' ').toLowerCase().replace(/\s+/g, ' ').trim() }
+    function sortedEntries(m, max = 12) { return Object.entries(m).sort((a, b) => b[1] - a[1]).slice(0, max) }
+    function countSingle(arr) { const m = {}; arr.forEach(v => { const k = v.trim(); if (k) m[k] = (m[k] || 0) + 1 }); return m }
+    function wrapLabel(s, max = 22) { if (s.length <= max) return s; const w = s.split(' '), lines = []; let c = ''; for (const x of w) { if ((c + ' ' + x).trim().length > max && c) { lines.push(c); c = x } else c = (c + ' ' + x).trim() } if (c) lines.push(c); return lines }
+
+    function ageGroup(val) {
+      const v = (val || '').toString().trim();
+      const groups = ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'];
+      const direct = groups.find(g => v === g || v.replace(/\s/g, '').startsWith(g.replace(/\s/g, '')));
+      if (direct) return direct;
+      const n = parseInt(v); if (isNaN(n) || n < 0) return null;
+      if (n <= 24) return '18-24'; if (n <= 34) return '25-34'; if (n <= 44) return '35-44'; if (n <= 54) return '45-54'; if (n <= 64) return '55-64'; return '65+';
+    }
+
+    function isNumericScale(arr) {
+      if (!arr || arr.length === 0) return false;
+      const nums = arr.map(v => parseFloat(v)).filter(v => !isNaN(v));
+      return nums.length > arr.length * 0.5 && Math.max(...nums) <= 10 && Math.min(...nums) >= 0;
+    }
+
+    // ── CHART DEFAULTS ──
+    const CDEFS = { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1a1a1a', titleFont: { family: "'Poppins',sans-serif", weight: 600, size: 11 }, bodyFont: { family: "'Poppins',sans-serif", size: 11 }, padding: 10, cornerRadius: 4, displayColors: false } } };
+
+    function makeBar(id, labels, data, colors, horiz = false, showDL = true, hideScale = false, hideLabels = false) {
+      destroyChart(id); const c = document.getElementById(id); if (!c) return;
+      const total = data.reduce((a, b) => a + b, 0);
+      const filtered = data.map((v, i) => ({ v, l: labels[i], c: Array.isArray(colors) ? colors[i] : colors })).filter(x => x.v > 0);
+      if (filtered.length === 0) return;
+      const fLabels = filtered.map(x => x.l), fData = filtered.map(x => x.v), fColors = Array.isArray(colors) ? filtered.map(x => x.c) : colors;
+      const fs = window.innerWidth <= 768 ? 9 : 10;
+      charts[id] = new Chart(c.getContext('2d'), {
+        type: 'bar', data: { labels: fLabels.map(l => wrapLabel(String(l), horiz ? 30 : 18)), datasets: [{ data: fData, backgroundColor: fColors, borderRadius: horiz ? { topRight: 20, bottomRight: 20 } : { topLeft: 20, topRight: 20 }, borderSkipped: false }] },
+        options: {
+          ...CDEFS, indexAxis: horiz ? 'y' : 'x',
+          plugins: { ...CDEFS.plugins, datalabels: showDL ? { anchor: 'end', align: 'end', formatter: v => total > 0 ? Math.round(v / total * 100) + '%' : '', font: { family: "'Poppins',sans-serif", weight: 600, size: fs }, color: '#4d4d4d', clip: false } : { display: false } },
+          layout: { padding: { top: !horiz ? 18 : 0, right: horiz ? 46 : 0, left: 0 } },
+          scales: {
+            x: { display: horiz ? !hideScale : !hideLabels, grid: { display: horiz, color: 'rgba(0,0,0,.04)' }, ticks: { font: { size: fs }, color: '#808080' }, grace: horiz ? '12%' : 0 },
+            y: { display: horiz ? !hideLabels : !hideScale, grid: { color: 'rgba(0,0,0,.04)', display: !horiz }, ticks: { font: { size: fs }, color: '#808080' }, grace: !horiz ? '14%' : 0 }
+          }
+        }, plugins: [ChartDataLabels]
+      });
+    }
+
+    function makeDoughnut(id, labels, data, colors) {
+      destroyChart(id); const c = document.getElementById(id); if (!c) return;
+      const total = data.reduce((a, b) => a + b, 0);
+      const filtered = data.map((v, i) => ({ v, l: labels[i], c: colors[i] })).filter(x => x.v > 0);
+      if (filtered.length === 0) return;
+      const fLabels = filtered.map(x => x.l), fData = filtered.map(x => x.v), fColors = filtered.map(x => x.c);
+      const fs = window.innerWidth <= 768 ? 9 : 10;
+      charts[id] = new Chart(c.getContext('2d'), {
+        type: 'doughnut', data: { labels: fLabels.map(l => wrapLabel(String(l), 24)), datasets: [{ data: fData, backgroundColor: fColors, borderWidth: 2, borderColor: '#fff', hoverBorderColor: '#fff' }] },
+        options: { ...CDEFS, cutout: '55%', plugins: { ...CDEFS.plugins, legend: { display: true, position: 'bottom', labels: { usePointStyle: true, pointStyle: 'circle', font: { family: "'Poppins',sans-serif", size: fs }, color: '#4d4d4d', padding: 10 } }, datalabels: { display: true, formatter: v => total > 0 ? Math.round(v / total * 100) + '%' : '', font: { family: "'Poppins',sans-serif", weight: 700, size: fs + 1 }, color: '#fff' } } }, plugins: [ChartDataLabels]
+      });
+    }
+
+    function makeRatingBar(id, rawArr) {
+      destroyChart(id); const c = document.getElementById(id); if (!c) return;
+      const nums = rawArr.map(v => parseFloat(v)).filter(v => !isNaN(v) && v >= 1 && v <= 10);
+      const total = nums.length; if (total === 0) return;
+
+      const avg = nums.reduce((a, b) => a + b, 0) / total;
+      const ins = nums.filter(v => v <= 4).length;
+      const neu = nums.filter(v => v >= 5 && v <= 6).length;
+      const sat = nums.filter(v => v >= 7 && v <= 8).length;
+      const exc = nums.filter(v => v >= 9).length;
+
+      const sumEl = document.getElementById(id + 'Summary');
+      if (sumEl) {
+        sumEl.innerHTML = `
+          <div class="rating-header">
+            <div class="rating-mini"><span class="rating-mini-val" style="color:#f1948a">${pct(ins, total)}%</span><span class="rating-mini-label">Insatisfechos</span></div>
+            <div class="rating-mini"><span class="rating-mini-val" style="color:#808080">${pct(neu, total)}%</span><span class="rating-mini-label">Neutros</span></div>
+            <div class="rating-mini"><span class="rating-mini-val" style="color:#5dade2">${pct(sat, total)}%</span><span class="rating-mini-label">Satisfechos</span></div>
+            <div class="rating-mini"><span class="rating-mini-val" style="color:#0d6fbb">${pct(exc, total)}%</span><span class="rating-mini-label">Muy satisfechos</span></div>
+            <div class="rating-mini"><span class="rating-mini-val" style="color:#1a1a1a">${avg.toFixed(1)}</span><span class="rating-mini-label">Media</span></div>
+          </div>
+        `;
+      }
+
+      const legEl = document.getElementById(id + 'Legend');
+      if (legEl) {
+        legEl.innerHTML = `
+          <div class="rating-legend">
+            <div class="leg-item"><div class="leg-dot" style="background:#f1948a"></div> Insatisfechos (1-4)</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#d5d8dc"></div> Neutros (5-6)</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#5dade2"></div> Satisfechos (7-8)</div>
+            <div class="leg-item"><div class="leg-dot" style="background:#0d6fbb"></div> Muy satisfechos (9-10)</div>
+          </div>
+        `;
+      }
+
+      const dist = {}; nums.forEach(v => { const k = String(Math.round(v)); dist[k] = (dist[k] || 0) + 1 });
+      const labels = Array.from({ length: 10 }, (_, i) => String(i + 1));
+      const vals = labels.map(l => dist[l] || 0);
+      const fs = window.innerWidth <= 768 ? 9 : 10;
+
+      charts[id] = new Chart(c.getContext('2d'), {
+        type: 'bar', data: { labels, datasets: [{ data: vals, backgroundColor: labels.map(l => { const v = +l; if (v <= 4) return '#f1948a'; if (v <= 6) return '#d5d8dc'; if (v <= 8) return '#5dade2'; return '#0d6fbb' }), borderRadius: { topLeft: 12, topRight: 12 }, borderSkipped: false }] },
+        options: { ...CDEFS, plugins: { ...CDEFS.plugins, datalabels: { display: true, anchor: 'end', align: 'top', formatter: v => total > 0 && v > 0 ? Math.round(v / total * 100) + '%' : '', font: { family: "'Poppins',sans-serif", weight: 600, size: fs }, color: '#4d4d4d', clip: false } }, layout: { padding: { top: 18 } }, scales: { x: { grid: { display: false }, ticks: { font: { size: fs }, color: '#808080' } }, y: { display: false, grace: '14%' } } }, plugins: [ChartDataLabels]
+      });
+    }
+
+    const FLAVOR_COLORS = {
+      'mandarina': 'linear-gradient(90deg, #FF8C00, #FFA500)',
+      'naranja': 'linear-gradient(90deg, #FF8C00, #FFA500)',
+      'detox': 'linear-gradient(90deg, #FF8C00, #FFA500)',
+      'manzana': 'linear-gradient(90deg, #4CAF50, #8BC34A)',
+      'apple': 'linear-gradient(90deg, #4CAF50, #8BC34A)',
+      'lean': 'linear-gradient(90deg, #4CAF50, #8BC34A)',
+      'mango': 'linear-gradient(90deg, #FFD700, #FFB300)',
+      'pasion': 'linear-gradient(90deg, #FFD700, #FFB300)',
+      'perform': 'linear-gradient(90deg, #FFD700, #FFB300)',
+      'bayas': 'linear-gradient(90deg, #8E44AD, #E74C3C)',
+      'berries': 'linear-gradient(90deg, #8E44AD, #E74C3C)',
+      'boost': 'linear-gradient(90deg, #8E44AD, #E74C3C)',
+      'dragon': 'linear-gradient(90deg, #FF1493, #FF69B4)',
+      'yuzu': 'linear-gradient(90deg, #FF1493, #FF69B4)',
+      'immunitea': 'linear-gradient(90deg, #FF1493, #FF69B4)',
+      'citrico': 'linear-gradient(90deg, #00CED1, #40E0D0)',
+      'revive': 'linear-gradient(90deg, #00CED1, #40E0D0)',
+      'sandia': 'linear-gradient(90deg, #FF4D6D, #FF85A1)',
+      'frambuesa': 'linear-gradient(90deg, #C71585, #FF1493)',
+      'limon': 'linear-gradient(90deg, #D4E157, #AFB42B)',
+      'ginger': 'linear-gradient(90deg, #D4E157, #AFB42B)'
+    };
+
+    function makeLeaderboard(containerId, labels, data, stacked = false) {
+      const el = document.getElementById(containerId); if (!el) return; el.innerHTML = '';
+      const total = data.reduce((a, b) => a + b, 0); const maxVal = Math.max(...data);
+      let rank = 1;
+      labels.forEach((label, i) => {
+        if (data[i] === 0) return;
+        const p = total > 0 ? Math.round(data[i] / total * 100) : 0;
+        const barW = maxVal > 0 ? Math.round(data[i] / maxVal * 100) : 0;
+        const lnorm = norm(label);
+        let grad = 'var(--econ-red)';
+        for (const [k, v] of Object.entries(FLAVOR_COLORS)) { if (lnorm.includes(k)) { grad = v; break } }
+
+        if (stacked) {
+          if (lnorm.includes('mucho mejor') || lnorm.includes('algo mejor')) {
+            grad = 'linear-gradient(to right, var(--blue), rgba(13, 111, 187, 0.5))';
+          } else if (lnorm.includes('como lo esperaba')) {
+            grad = 'linear-gradient(to right, var(--text-tertiary), rgba(128, 128, 128, 0.5))';
+          } else if (lnorm.includes('peor')) {
+            grad = 'linear-gradient(to right, var(--econ-red-dark), rgba(179, 13, 8, 0.5))';
+          } else {
+            grad = 'linear-gradient(to right, var(--econ-red), rgba(227, 18, 11, 0.5))';
+          }
+        }
+
+        const row = document.createElement('div');
+        row.className = `lb-row ${stacked ? 'stacked' : ''}`;
+
+        if (!stacked) {
+          if (lnorm.includes('compradores potenciales') || (lnorm.includes('si') && lnorm.includes('comprar'))) {
+            grad = 'linear-gradient(90deg, #0d6fbb, #5dade2)';
+          } else if (lnorm.includes('indecisos') || lnorm.includes('no lo se') || lnorm.includes('no lo sé') || lnorm === 'no se') {
+            grad = 'linear-gradient(90deg, #b3b3b3, #808080)';
+          } else if (lnorm.includes('no compradores') || lnorm.includes('no lo comprar')) {
+            grad = '#8B0000';
+          }
+        }
+
+        if (stacked) {
+          row.innerHTML = `
+            <div class="lb-top">
+              <div class="lb-rank ${rank <= 1 ? 'top' : ''}">${rank}</div>
+              <div class="lb-label">${label}</div>
+              <div class="lb-pct">${p}%</div>
+            </div>
+            <div class="lb-bar-track"><div class="lb-bar-fill" style="width:${barW}%; background: ${grad};"></div></div>
+          `;
+        } else {
+          row.innerHTML = `<div class="lb-rank ${rank <= 1 ? 'top' : ''}">${rank}</div><div class="lb-label">${label}</div><div class="lb-bar-track"><div class="lb-bar-fill" style="width:${barW}%; background:${grad}"></div></div><div class="lb-pct">${p}%</div>`;
+        }
+
+        el.appendChild(row);
+        rank++;
+      });
+    }
+
+    // ── AUTO-DETECT COLUMN INDICES ──
+    function detectColumns(headers) {
+      CI = { gender: -1, age: -1, saborAct: -1, conocimiento: -1, saborVH: -1, frecuencia: -1, opinion: -1, valoracion: -1, caracteristicas: -1, cual: -1, importancia: -1, compra: -1, noGustado: -1, recomendacion: -1 };
+      const nh = headers.map(h => norm(h || ''));
+      nh.forEach((t, i) => {
+        if (t === 'gender' || t === 'genero' || t === 'sexo') CI.gender = i;
+        else if ((t === 'user_age' || t === 'edad' || t === 'age') && !/(variedad)/.test(t)) CI.age = i;
+        else if (t.includes('que sabor has probado') && t.includes('activacion')) CI.saborAct = i;
+        else if (t.includes('antes de obtener') && t.includes('conocias')) CI.conocimiento = i;
+        else if (t.includes('que sabor has probado') && !t.includes('activacion')) CI.saborVH = i;
+        else if (t.includes('frecuencia') && t.includes('probado')) CI.frecuencia = i;
+        else if (t.includes('que te ha parecido')) CI.opinion = i;
+        else if (t.includes('valoracion general')) CI.valoracion = i;
+        else if (t.includes('caracteristicas buscas')) CI.caracteristicas = i;
+        else if (t.includes('puedes decirnos cual')) CI.cual = i;
+        else if (t.includes('importante') && t.includes('refuerzo')) CI.importancia = i;
+        else if (t.includes('probable') && t.includes('compres')) CI.compra = i;
+        else if (t.includes('no te haya gustado') || t.includes('algo que no')) CI.noGustado = i;
+        else if (t.includes('recomendarias')) CI.recomendacion = i;
+      });
+      console.log('Column mapping:', JSON.parse(JSON.stringify(CI)));
+    }
+
+    // Map question headers to CI keys
+    function colForHeader(h) {
+      const t = norm(h);
+      if (t.includes('que sabor') && t.includes('activacion')) return CI.saborAct;
+      if (t.includes('antes de obtener')) return CI.conocimiento;
+      if (t.includes('que sabor') && !t.includes('activacion')) return CI.saborVH;
+      if (t.includes('frecuencia')) return CI.frecuencia;
+      if (t.includes('que te ha parecido')) return CI.opinion;
+      if (t.includes('valoracion general')) return CI.valoracion;
+      if (t.includes('caracteristicas')) return CI.caracteristicas;
+      if (t.includes('puedes decirnos')) return CI.cual;
+      if (t.includes('importante') && t.includes('refuerzo')) return CI.importancia;
+      if (t.includes('probable') && t.includes('compres')) return CI.compra;
+      if (t.includes('no te haya gustado')) return CI.noGustado;
+      if (t.includes('recomendarias')) return CI.recomendacion;
+      // Fallback: find by exact match in allHeaders
+      const idx = allHeaders.findIndex(hdr => norm(hdr) === t || norm(hdr).includes(t.slice(0, 30)));
+      return idx >= 0 ? idx : -1;
+    }
+
+    // ── BUILD CHART CARDS ──
+    function buildChartCards() {
+      const container = document.getElementById('chartsContainer'); container.innerHTML = '';
+      let pairBuffer = null;
+      QUESTIONS.forEach((q, qi) => {
+        if (q.type === 'vbar') {
+          cardHtml = `<div class="card" style="margin-bottom:10px" id="qCard${qi}"><div class="card-inner"><div class="card-header"><div class="card-label">${q.label}</div><div class="card-question">${q.header}</div></div><div id="qChart${qi}Summary"></div><div class="chart-wrap h260"><canvas id="qChart${qi}"></canvas></div><div id="qChart${qi}Legend"></div></div></div>`;
+        } else {
+          const chartHeightClass = q.header.includes('no te haya gustado') ? 'h320' : 'h260';
+          cardHtml = `<div class="card" style="margin-bottom:10px" id="qCard${qi}"><div class="card-inner"><div class="card-header"><div class="card-label">${q.label}</div><div class="card-question">${q.header}</div></div>${q.type === 'leaderboard' ? `<div class="lb-wrap" id="qChart${qi}"></div>` : `<div class="chart-wrap ${chartHeightClass}"><canvas id="qChart${qi}"></canvas></div>`}</div></div>`;
+        }
+
+        // Group horizontal bars, leaderboards, or vertical bars in pairs
+        if (q.type === 'bar' || q.type === 'leaderboard' || q.type === 'vbar') {
+          if (!pairBuffer) { pairBuffer = { html: cardHtml, label: q.label } }
+          else {
+            const gridClass = (pairBuffer.label === 'Opinión del producto' && q.label === 'Valoración general') ? 'g-custom-split' : 'g2';
+            container.insertAdjacentHTML('beforeend', `<div class="${gridClass}" style="margin-bottom:10px">${pairBuffer.html}${cardHtml}</div>`);
+            pairBuffer = null;
+          }
+        } else {
+          if (pairBuffer) { container.insertAdjacentHTML('beforeend', pairBuffer.html); pairBuffer = null }
+          container.insertAdjacentHTML('beforeend', cardHtml);
+        }
+      });
+      if (pairBuffer) { container.insertAdjacentHTML('beforeend', pairBuffer.html); pairBuffer = null }
+    }
+
+    // ── RENDER ──
+    function render(rows) {
+      const total = rows.length;
+      document.getElementById('kpiTotal').textContent = total.toLocaleString('es-ES');
+      document.getElementById('kpiTotalSub').textContent = (total / TOTAL_SAMPLINGS * 100).toFixed(1) + '% del sampling';
+
+      // KPI: Conocimiento previo — "No lo conocía"
+      const conocArr = CI.conocimiento >= 0 ? rows.map(r => (r[CI.conocimiento] || '').toString().trim()).filter(v => v !== '') : [];
+      const noConocia = conocArr.filter(v => { const l = norm(v); return l.includes('no lo conoc') || l === 'no' }).length;
+      document.getElementById('kpiKnew').textContent = conocArr.length > 0 ? pct(noConocia, conocArr.length) + '%' : '—';
+
+      // KPI: Comprarían — "Sí, lo compraré"
+      const compraArr = CI.compra >= 0 ? rows.map(r => (r[CI.compra] || '').toString().trim()).filter(v => v !== '') : [];
+      const compraSi = compraArr.filter(v => { const l = norm(v); return l.includes('si, lo comprare') || l.includes('si lo comprare') || l.includes('seguro') || l.includes('muy probable') }).length;
+      const pCompra = compraArr.length > 0 ? pct(compraSi, compraArr.length) : 0;
+      document.getElementById('kpiCompra').textContent = compraArr.length > 0 ? pCompra + '%' : '—';
+
+      // KPI: Valoración media — col 16 (CI.valoracion)
+      const scoreRaw = CI.valoracion >= 0 ? rows.map(r => (r[CI.valoracion] || '').toString().trim()).filter(v => v !== '') : [];
+      const scoreArr = scoreRaw.map(v => parseFloat(v)).filter(v => !isNaN(v) && v >= 1 && v <= 10);
+      const scoreAvg = scoreArr.length > 0 ? scoreArr.reduce((a, b) => a + b, 0) / scoreArr.length : 0;
+      document.getElementById('kpiScore').textContent = scoreArr.length > 0 ? scoreAvg.toFixed(1) : '—';
+      const diffS = parseFloat((scoreAvg - BENCH_SCORE).toFixed(1));
+      document.getElementById('kpiBenchScore').innerHTML = scoreArr.length > 0 ? `<div class="bench-tag ${diffS >= 0 ? 'up' : 'down'}">${diffS >= 0 ? '↑' : '↓'} vs ${BENCH_SCORE} (${diffS >= 0 ? '+' : ''}${diffS})</div>` : '';
+
+      // GENDER donut
+      const gArr = CI.gender >= 0 ? rows.map(r => (r[CI.gender] || '').toString().trim().toLowerCase()).filter(v => v !== '') : [];
+      if (gArr.length > 0) {
+        const fC = gArr.filter(v => v.startsWith('f') || v === 'mujer' || v === 'femenino').length;
+        const mC = gArr.filter(v => v.startsWith('m') || v === 'hombre' || v === 'masculino').length;
+        const gl = ['Femenino', 'Masculino'], gd = [fC, mC], gc = ['#E3120B', '#0d6fbb'];
+        makeDoughnut('chartGenero', gl, gd, gc);
+      }
+
+      // AGE vertical bar (no Y axis)
+      const ageGroups = ['18-24', '25-34', '35-44', '45-54', '55-64', '65+'];
+      const ageCounts = {}; ageGroups.forEach(g => ageCounts[g] = 0);
+      const ageNums = [];
+      (CI.age >= 0 ? rows.map(r => (r[CI.age] || '').toString()) : []).forEach(v => {
+        const g = ageGroup(v); if (g) { ageCounts[g]++; const n = parseInt(v); if (!isNaN(n) && n >= 0) ageNums.push(n) }
+      });
+      const ageData = ageGroups.map(g => ageCounts[g]);
+      if (ageData.some(v => v > 0)) makeBar('chartEdad', ageGroups, ageData, PAL_RED.slice(0, 6), false, true, true);
+      if (ageNums.length > 0) {
+        document.getElementById('edadMediaValue').textContent = (ageNums.reduce((a, b) => a + b, 0) / ageNums.length).toFixed(0) + ' años';
+        const freq = {}; ageNums.forEach(n => { freq[n] = (freq[n] || 0) + 1 });
+        let moda = ageNums[0], maxC = 0; Object.entries(freq).forEach(([n, c]) => { if (c > maxC) { moda = parseInt(n); maxC = c } });
+        document.getElementById('edadModaValue').textContent = moda + ' años';
+      }
+
+      // QUESTION CHARTS
+      QUESTIONS.forEach((q, qi) => {
+        const idx = colForHeader(q.header);
+        if (idx < 0) return;
+        const csvHeader = allHeaders[idx] || q.header;
+        const raw = rows.map(r => {
+          let v = (r[idx] || '').toString().trim();
+          if (v.toLowerCase().startsWith(csvHeader.toLowerCase())) {
+            v = v.substring(csvHeader.length).replace(/^[:\-\s—\.]+/, '').trim();
+          }
+          return v;
+        }).filter(v => v !== '');
+        if (raw.length === 0) return;
+        const cid = 'qChart' + qi;
+
+        if (q.type === 'doughnut') {
+          const m = countSingle(raw); const e = sortedEntries(m, 8);
+          if (e.length > 0) makeDoughnut(cid, e.map(x => x[0]), e.map(x => x[1]), PAL_ECON.slice(0, e.length));
+        } else if (q.type === 'bar') {
+          const hScale = q.label.includes('Conocimiento') || q.label.includes('Frecuencia') ||
+            q.label.includes('Características') || q.label.includes('Detalle') ||
+            q.label.includes('Importancia') || q.label.includes('Aspectos');
+
+          if (q.label === 'Importancia funcional') {
+            const order = ['Muy Importante', 'Importante', 'Algo importante', 'Nada importante'];
+            const m = countSingle(raw);
+            const labels = [], vals = [];
+            let top2Count = 0;
+            order.forEach((lab, i) => {
+              const key = Object.keys(m).find(k => norm(k).includes(norm(lab)));
+              if (key) {
+                labels.push(lab);
+                vals.push(m[key]);
+                if (i < 2) top2Count += m[key];
+              }
+            });
+            const customPal = ['#0d6fbb', '#5dade2', '#f1948a', '#E3120B'];
+            if (labels.length > 0) {
+              makeBar(cid, labels, vals, customPal, true, true, hScale, false);
+              const canvas = document.getElementById(cid);
+              if (canvas) {
+                const wrap = canvas.parentNode;
+
+                const flexContainer = document.createElement('div');
+                flexContainer.style.display = 'flex';
+                flexContainer.style.alignItems = 'flex-start';
+                flexContainer.style.justifyContent = 'space-between';
+
+                wrap.parentNode.insertBefore(flexContainer, wrap);
+                flexContainer.appendChild(wrap);
+                wrap.style.width = '75%';
+                wrap.style.display = 'block';
+
+                const sumEl = document.createElement('div');
+                sumEl.style.flex = 'none';
+                sumEl.style.width = '25%';
+                sumEl.style.textAlign = 'right';
+                sumEl.innerHTML = `
+                  <div style="margin-top: 15px;">
+                    <span style="display: inline-flex; align-items: center; gap: 6px; background: rgba(13, 111, 187, 0.08); padding: 4px 8px; border-radius: 20px; border: 1px solid rgba(13, 111, 187, 0.2); white-space: nowrap;">
+                      <span style="font-size: 9px; font-weight: 700; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.05em;">Top 2 Box</span>
+                      <span style="color: #0d6fbb; font-size: 14px; font-weight: 800;">${pct(top2Count, raw.length)}%</span>
+                    </span>
+                  </div>
+                `;
+                flexContainer.appendChild(sumEl);
+              }
+            }
+          } else if (q.label === 'Detalle adicional') {
+            const m = countSingle(raw); const e = sortedEntries(m, 10);
+            const customPal = ['#b3b3b3', '#999999', '#808080', '#666666', '#4d4d4d', '#333333', '#1a1a1a', '#000000', '#000000', '#000000'];
+            if (e.length > 0) makeBar(cid, e.map(x => x[0]), e.map(x => x[1]), customPal, true, true, hScale, false);
+          } else {
+            const m = countSingle(raw); const e = sortedEntries(m, 10);
+            if (e.length > 0) makeBar(cid, e.map(x => x[0]), e.map(x => x[1]), PAL_BLUE, true, true, hScale, false);
+          }
+        } else if (q.type === 'vbar') {
+          if (isNumericScale(raw)) { makeRatingBar(cid, raw) }
+          else { const m = countSingle(raw); const e = sortedEntries(m, 10); if (e.length > 0) makeBar(cid, e.map(x => x[0]), e.map(x => x[1]), PAL_RED, false, true, true, false) }
+        } else if (q.type === 'leaderboard') {
+          if (q.label === 'Opinión del producto') {
+            const order = ['Mucho mejor de lo que esperaba', 'Algo mejor de lo que esperaba', 'Como lo esperaba', 'Peor de lo esperado', 'Peor de lo que esperaba', 'Mucho peor de lo esperado', 'Mucho peor de lo que esperaba'];
+            const m = countSingle(raw);
+            const labels = [], vals = [];
+            order.forEach(lab => {
+              const key = Object.keys(m).find(k => norm(k).includes(norm(lab)));
+              if (key) { labels.push(lab); vals.push(m[key]) }
+            });
+            if (labels.length > 0) makeLeaderboard(cid, labels, vals, true);
+          } else if (q.label === 'Intención de compra') {
+            const m = countSingle(raw);
+            const categories = { 'Compradores Potenciales': 0, 'Indecisos': 0, 'No Compradores': 0 };
+            Object.entries(m).forEach(([k, v]) => {
+              const n = norm(k);
+              if (n.includes('si') && n.includes('comprar')) {
+                categories['Compradores Potenciales'] += v;
+              } else if (n.includes('no lo se') || n.includes('no lo sé') || n === 'no se' || n.includes('indecis')) {
+                categories['Indecisos'] += v;
+              } else if (n.includes('no lo comprar') || n.includes('no comprare') || n.includes('no compradores') || n.includes('no compraré')) {
+                categories['No Compradores'] += v;
+              } else if (n.includes('probable')) {
+                categories['Compradores Potenciales'] += v;
+              } else {
+                categories['Indecisos'] += v;
+              }
+            });
+            const order = ['Compradores Potenciales', 'Indecisos', 'No Compradores'];
+            const labels = [], vals = [];
+            order.forEach(lab => {
+              if (categories[lab] > 0) { labels.push(lab); vals.push(categories[lab]); }
+            });
+            if (labels.length > 0) makeLeaderboard(cid, labels, vals, false);
+          } else {
+            const m = countSingle(raw); const e = sortedEntries(m, 10);
+            if (e.length > 0) makeLeaderboard(cid, e.map(x => x[0]), e.map(x => x[1]), false);
+          }
+        }
+      });
+
+      // INSIGHTS
+      document.getElementById('insightCompra').innerHTML = compraArr.length > 0 ? `<strong>${pCompra}%</strong> de los encuestados manifiestan intención de comprar Vit-Hit. ${pCompra >= 50 ? 'Este nivel de conversión es significativamente alto, indicando que el sampling es un driver de ventas muy eficaz.' : 'Existe margen de mejora en conversión que podría abordarse con estrategias de comunicación en punto de venta.'}` : '—';
+
+      document.getElementById('insightScore').innerHTML = scoreArr.length > 0 ? `La valoración media alcanza <strong>${scoreAvg.toFixed(1)}/10</strong>, ${diffS >= 0 ? 'superando' : 'por debajo del'} benchmark de ${BENCH_SCORE}. El <strong>${pct(scoreArr.filter(v => v >= 7).length, scoreArr.length)}%</strong> otorga una nota ≥7, confirmando alta aceptación organoléptica.` : '—';
+
+      document.getElementById('insightBrand').innerHTML = conocArr.length > 0 ? `<strong>${pct(noConocia, conocArr.length)}%</strong> no conocían Vit-Hit antes de la activación. El sampling funciona como herramienta de descubrimiento: la mayoría del público es nuevo, lo que maximiza el potencial de expansión de base de consumidores.` : '—';
+
+      const topAge = ageGroups.reduce((a, b) => (ageCounts[a] || 0) >= (ageCounts[b] || 0) ? a : b);
+      const gF = gArr.filter(v => v.startsWith('f') || v === 'mujer').length;
+      document.getElementById('insightProfile').innerHTML = total > 0 ? `El segmento dominante es <strong>${topAge} años</strong> (${pct(ageCounts[topAge], total)}%), con <strong>${pct(gF, gArr.length)}% mujeres</strong>. Este perfil define el target prioritario para campañas de comunicación y segmentación en retail.` : '—';
+
+      document.getElementById('footerInfo').textContent = `Total encuestados: ${total.toLocaleString('es-ES')} · Vit-Hit · Samplia`;
+    }
+
+    // ── FILTER ──
+    function getFiltered() {
+      const g = document.getElementById('fGender').value;
+      const a = document.getElementById('fAge').value;
+      const s = document.getElementById('fSabor').value;
+      return allRows.filter(r => {
+        if (g && CI.gender >= 0) { const v = (r[CI.gender] || '').toString().trim().toLowerCase(); const isF = v.startsWith('f') || v === 'mujer'; const isM = v.startsWith('m') || v === 'hombre'; if (g === 'F' && !isF) return false; if (g === 'M' && !isM) return false }
+        if (a && CI.age >= 0) { const ag = ageGroup((r[CI.age] || '').toString()); if (!ag || ag !== a) return false }
+        if (s && CI.saborAct >= 0) {
+          let v = (r[CI.saborAct] || '').toString().trim();
+          const csvHeader = allHeaders[CI.saborAct] || '¿Qué sabor has probado de Vit-Hit en esta activación?';
+          if (v.toLowerCase().startsWith(csvHeader.toLowerCase())) {
+            v = v.substring(csvHeader.length).replace(/^[:\-\s—\.]+/, '').trim();
+          }
+          if (v !== s) return false;
+        }
+        return true;
+      });
+    }
+
+    function populateSaborFilter() {
+      if (CI.saborAct < 0) return;
+      const csvHeader = allHeaders[CI.saborAct] || '¿Qué sabor has probado de Vit-Hit en esta activación?';
+      const arr = allRows.map(r => {
+        let v = (r[CI.saborAct] || '').toString().trim();
+        if (v.toLowerCase().startsWith(csvHeader.toLowerCase())) {
+          v = v.substring(csvHeader.length).replace(/^[:\-\s—\.]+/, '').trim();
+        }
+        return v;
+      }).filter(v => v !== '');
+      const unique = [...new Set(arr)].sort();
+      const sel = document.getElementById('fSabor'); sel.innerHTML = '<option value="">Todos</option>';
+      unique.forEach(v => { const o = document.createElement('option'); o.value = v; o.textContent = v; sel.appendChild(o) });
+    }
+
+    // ── LOADERS (3 strategies) ──
+
+    // Strategy 1: PapaParse download CSV
+    function loadCSV(url) {
+      return new Promise((resolve, reject) => {
+        Papa.parse(url, {
+          download: true, skipEmptyLines: true,
+          complete: function (r) {
+            if (!r.data || r.data.length < 2) { reject(new Error('CSV vacío')); return }
+            const first = r.data[0];
+            if (first.length === 1 && first[0] && first[0].toString().trim().startsWith('<!')) { reject(new Error('HTML instead of CSV')); return }
+            const headers = r.data[0];
+            const rows = r.data.slice(1).filter(row => row.some(c => c && c.toString().trim() !== ''));
+            console.log('📊 CSV loaded:', rows.length, 'rows,', headers.length, 'cols');
+            resolve({ headers, rows });
+          },
+          error: function (e) { reject(new Error('PapaParse: ' + (e.message || e))) }
+        });
+      });
+    }
+
+    // Strategy 2: Fetch CSV then parse
+    async function loadCSVFetch(url) {
+      const res = await fetch(url, { mode: 'cors', cache: 'no-cache', redirect: 'follow' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const text = await res.text();
+      if (text.trim().startsWith('<!')) throw new Error('HTML response');
+      return new Promise((resolve, reject) => {
+        Papa.parse(text, {
+          skipEmptyLines: true,
+          complete: function (r) {
+            if (!r.data || r.data.length < 2) { reject(new Error('Parsed CSV empty')); return }
+            resolve({ headers: r.data[0], rows: r.data.slice(1).filter(row => row.some(c => c && c.toString().trim() !== '')) });
+          },
+          error: function (e) { reject(new Error('Parse: ' + (e.message || e))) }
+        });
+      });
+    }
+
+    // Strategy 3: Parse HTML table from pubhtml
+    async function loadHTML(url) {
+      const res = await fetch(url, { mode: 'cors', cache: 'no-cache' });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const html = await res.text();
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+      const table = doc.querySelector('table');
+      if (!table) throw new Error('No table in HTML');
+      const trs = table.querySelectorAll('tr');
+      if (trs.length < 2) throw new Error('Table < 2 rows');
+      let headerIdx = 0;
+      for (let i = 0; i < trs.length; i++) {
+        const cells = trs[i].querySelectorAll('td,th');
+        const texts = Array.from(cells).map(c => c.textContent.trim());
+        if (texts.filter(t => t).length > 3) { headerIdx = i; break }
+      }
+      const headers = Array.from(trs[headerIdx].querySelectorAll('td,th')).map(c => c.textContent.trim());
+      const rows = [];
+      for (let i = headerIdx + 1; i < trs.length; i++) {
+        const row = Array.from(trs[i].querySelectorAll('td,th')).map(c => c.textContent.trim());
+        if (row.some(c => c !== '')) rows.push(row);
+      }
+      console.log('📊 HTML parsed:', rows.length, 'rows');
+      return { headers, rows };
+    }
+
+    function showErrorBanner(msg, detail = '') {
+      let b = document.getElementById('dataBanner'); if (!b) { b = document.createElement('div'); b.id = 'dataBanner'; document.body.appendChild(b) }
+      b.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#f87171" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg><div><div style="color:#fff">${msg}</div>${detail ? `<div style="color:#94a3b8;font-size:11px;margin-top:2px">${detail}</div>` : ''}</div><button onclick="this.parentElement.remove()" style="background:none;border:none;color:#94a3b8;cursor:pointer;font-size:16px;line-height:1;padding:0 0 0 8px">✕</button>`;
+    }
+
+    async function fetchData() {
+      let method = '';
+      try {
+        let result; const errs = [];
+
+        // Try 1: PapaParse CSV download
+        try { result = await loadCSV(CSV_URL); method = 'CSV' }
+        catch (e1) {
+          errs.push(e1.message); console.warn('⚠️ S1 PapaParse CSV:', e1.message);
+
+          // Try 2: Fetch + parse CSV
+          try { result = await loadCSVFetch(CSV_URL); method = 'Fetch-CSV' }
+          catch (e2) {
+            errs.push(e2.message); console.warn('⚠️ S2 Fetch CSV:', e2.message);
+
+            // Try 3: HTML table parse
+            try { result = await loadHTML(HTML_URL); method = 'HTML' }
+            catch (e3) {
+              errs.push(e3.message); console.warn('⚠️ S3 HTML:', e3.message);
+              throw new Error('3 strategies failed: ' + errs.join(' | '));
+            }
+          }
+        }
+
+        if (!result || !result.rows || result.rows.length === 0) throw new Error('No data after load');
+
+        allHeaders = result.headers; allRows = result.rows;
+        detectColumns(allHeaders);
+
+        // If no columns detected, use positional fallback
+        const detected = Object.entries(CI).filter(([k, v]) => v >= 0);
+        if (detected.length < 3) {
+          console.warn('⚠️ Only', detected.length, 'cols detected, applying positional fallback');
+          applyPositionalFallback();
+        }
+
+        buildChartCards();
+        populateSaborFilter();
+        render(getFiltered());
+        const b = document.getElementById('dataBanner'); if (b) b.remove();
+        document.getElementById('lastUpdate').textContent = `Actualizado ${new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}`;
+        console.log('✅', allRows.length, 'filas vía', method, '. Headers:', allHeaders);
+        console.log('🔍 Columns:', JSON.parse(JSON.stringify(CI)));
+      } catch (e) {
+        const isFile = location.protocol === 'file:';
+        let msg = 'No se pudieron cargar los datos', detail = '';
+        if (isFile) { msg = 'Abre desde un servidor web'; detail = 'file:// bloquea peticiones externas. Usa Live Server en VS Code o similar.' }
+        else { detail = e.message || 'Consola (F12) para detalles.' }
+        showErrorBanner(msg, detail);
+        document.getElementById('lastUpdate').textContent = 'Error · ' + (e.message || '');
+        console.error('❌', e);
+      }
+    }
+
+    // Fallback: columns by position (0-indexed) based on user spec
+    function applyPositionalFallback() {
+      CI.gender = 1; CI.age = 3; CI.cual = 5; CI.compra = 6; CI.frecuencia = 7;
+      CI.opinion = 8; CI.noGustado = 9; CI.importancia = 10; CI.saborAct = 11;
+      CI.conocimiento = 12; CI.caracteristicas = 13; CI.saborVH = 14;
+      CI.valoracion = 15; CI.recomendacion = 16;
+      console.log('📌 Positional fallback applied:', JSON.parse(JSON.stringify(CI)));
+    }
+
+    // ── EVENTS ──
+    ['fGender', 'fAge', 'fSabor'].forEach(id => { document.getElementById(id).addEventListener('change', () => render(getFiltered())) });
+    document.getElementById('lastUpdate').title = 'Clic para recargar';
+    document.getElementById('lastUpdate').addEventListener('click', fetchData);
+
+    // PDF
+    document.getElementById('downloadPdfBtn').addEventListener('click', async function () {
+      const btn = this; const orig = btn.innerHTML;
+      btn.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="animation:spin 1s linear infinite"><path d="M21 12a9 9 0 1 1-6.219-8.56"/></svg> Generando…'; btn.disabled = true;
+      try {
+        const { jsPDF } = window.jspdf; const pdf = new jsPDF('p', 'mm', 'a4');
+        const pdfW = 210, mg = 12, usable = pdfW - mg * 2; let y = mg + 6;
+        const blocks = Array.from(document.querySelector('.main').children).filter(el => !el.classList.contains('filter-bar') && el.tagName !== 'SCRIPT');
+        for (const block of blocks) {
+          const canvas = await html2canvas(block, { scale: 1.5, useCORS: true, backgroundColor: '#f2f2f2' });
+          const img = canvas.toDataURL('image/jpeg', .85); const dh = canvas.height * (usable / canvas.width);
+          if (y + dh > 297 - mg) { pdf.addPage(); y = mg }
+          pdf.addImage(img, 'JPEG', mg, y, usable, dh); y += dh + 3;
+        }
+        pdf.save('Resultados_VitHit_Samplia.pdf');
+      } catch (err) { console.error(err); alert('Error al generar PDF.') }
+      finally { btn.innerHTML = orig; btn.disabled = false }
+    });
+
+    // SCROLL
+    window.addEventListener('scroll', () => { const ws = document.body.scrollTop || document.documentElement.scrollTop; const h = document.documentElement.scrollHeight - document.documentElement.clientHeight; document.getElementById('scrollProgress').style.width = (ws / h * 100) + '%' });
+
+    // STICKY
+    const fb = document.querySelector('.filter-bar');
+    if (fb) { const obs = new IntersectionObserver(([e]) => { fb.classList.toggle('is-sticky', e.intersectionRatio < 1) }, { threshold: [1], rootMargin: '-61px 0px 0px 0px' }); obs.observe(fb) }
+
+    // RESIZE
+    let rT; window.addEventListener('resize', () => { clearTimeout(rT); rT = setTimeout(() => { if (allRows.length > 0) render(getFiltered()) }, 250) });
+
+    // LIGHTBOX
+    function openLightbox(src) { const lb = document.getElementById('lightbox'); document.getElementById('lightboxImg').src = src; lb.style.display = 'flex'; setTimeout(() => lb.classList.add('active'), 10); document.body.style.overflow = 'hidden' }
+    function closeLightbox() { const lb = document.getElementById('lightbox'); lb.classList.remove('active'); setTimeout(() => { lb.style.display = 'none'; document.body.style.overflow = '' }, 250) }
+    document.getElementById('lightbox').addEventListener('click', function (e) { if (e.target === this) closeLightbox() });
+    window.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox() });
+
+    // INIT
+    document.getElementById('lastUpdate').textContent = 'Cargando…';
+    fetchData();
+    setInterval(fetchData, 24 * 60 * 60 * 1000);
+  </script>
+</body>
+
+</html>
