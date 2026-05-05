@@ -1672,18 +1672,26 @@
               const canvas = document.getElementById(cid);
               if (canvas) {
                 const wrap = canvas.parentNode;
+                let flexContainer = wrap.parentNode;
+                if (!flexContainer.classList || !flexContainer.classList.contains('importancia-flex')) {
+                  const newFlex = document.createElement('div');
+                  newFlex.className = 'importancia-flex';
+                  newFlex.style.display = 'flex';
+                  newFlex.style.alignItems = 'flex-start';
+                  newFlex.style.justifyContent = 'space-between';
+                  wrap.parentNode.insertBefore(newFlex, wrap);
+                  newFlex.appendChild(wrap);
+                  flexContainer = newFlex;
+                } else {
+                  const oldSummary = flexContainer.querySelector('.importancia-summary');
+                  if (oldSummary) oldSummary.remove();
+                }
 
-                const flexContainer = document.createElement('div');
-                flexContainer.style.display = 'flex';
-                flexContainer.style.alignItems = 'flex-start';
-                flexContainer.style.justifyContent = 'space-between';
-
-                wrap.parentNode.insertBefore(flexContainer, wrap);
-                flexContainer.appendChild(wrap);
                 wrap.style.width = '75%';
                 wrap.style.display = 'block';
 
                 const sumEl = document.createElement('div');
+                sumEl.className = 'importancia-summary';
                 sumEl.style.flex = 'none';
                 sumEl.style.width = '25%';
                 sumEl.style.textAlign = 'right';
@@ -1741,7 +1749,43 @@
             order.forEach(lab => {
               if (categories[lab] > 0) { labels.push(lab); vals.push(categories[lab]); }
             });
-            if (labels.length > 0) makeLeaderboard(cid, labels, vals, false);
+            if (labels.length > 0) {
+              makeLeaderboard(cid, labels, vals, false);
+              const container = document.getElementById(cid);
+              if (container) {
+                // Move chart down for better badge visibility
+                container.style.marginTop = '40px';
+
+                // Add badge in upper right
+                const badgeContainer = document.createElement('div');
+                badgeContainer.style.position = 'absolute';
+                badgeContainer.style.top = '-30px';
+                badgeContainer.style.right = '10px';
+                badgeContainer.style.zIndex = '10';
+                const potencialPct = pct(categories['Compradores Potenciales'], raw.length);
+                const benchmark = 40;
+                const variation = ((potencialPct - benchmark) / benchmark * 100).toFixed(0);
+                const color = variation >= 0 ? '#28a745' : '#dc3545';
+                const sign = variation > 0 ? '+' : '';
+                badgeContainer.innerHTML = `
+                  <span style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.9); padding: 4px 8px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.1); white-space: nowrap; font-size: 11px;">
+                    <span style="font-weight: 700; color: var(--text-secondary);">vs Benchmark</span>
+                    <span style="color: ${color}; font-weight: 800;">${sign}${variation}%</span>
+                  </span>
+                `;
+                container.style.position = 'relative';
+                container.appendChild(badgeContainer);
+
+                // Add legend below the chart
+                const legend = document.createElement('div');
+                legend.style.marginTop = '10px';
+                legend.style.fontSize = '12px';
+                legend.style.color = '#666';
+                legend.style.textAlign = 'center';
+                legend.innerHTML = 'Benchmark en la categoría soft drinks 2025: 40%';
+                container.parentNode.appendChild(legend);
+              }
+            }
           } else {
             const m = countSingle(raw); const e = sortedEntries(m, 10);
             if (e.length > 0) makeLeaderboard(cid, e.map(x => x[0]), e.map(x => x[1]), false);
