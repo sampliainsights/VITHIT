@@ -545,6 +545,156 @@
       color: var(--econ-red)
     }
 
+    /* NPS CARD */
+    .nps-container {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      flex-wrap: wrap
+    }
+
+    .nps-metric-card {
+      background: linear-gradient(135deg, var(--blue) 0%, #1a5276 100%);
+      color: white;
+      border-radius: var(--r-xl);
+      padding: 24px;
+      min-width: 240px;
+      flex-shrink: 0;
+      box-shadow: var(--shadow-md);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 200px
+    }
+
+    .nps-metric-value {
+      font-family: var(--serif);
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 12px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, .15)
+    }
+
+    .nps-metric-label {
+      font-family: var(--sans);
+      font-size: 12px;
+      font-weight: 600;
+      opacity: 0.95;
+      line-height: 1.4
+    }
+
+    .nps-categories {
+      display: flex;
+      gap: 12px;
+      flex: 1;
+      min-width: 300px
+    }
+
+    .nps-category {
+      background: var(--bg);
+      border-radius: var(--r-lg);
+      padding: 16px 12px;
+      text-align: center;
+      flex: 1;
+      min-width: 100px
+    }
+
+    .nps-category-value {
+      font-family: var(--serif);
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 6px
+    }
+
+    .nps-category-label {
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      color: var(--text-tertiary);
+      margin-bottom: 8px
+    }
+
+    .nps-category-count {
+      font-family: var(--sans);
+      font-size: 9px;
+      color: var(--text-secondary);
+      font-weight: 500
+    }
+
+    .nps-category.promoters .nps-category-value {
+      color: var(--blue)
+    }
+
+    .nps-category.passives .nps-category-value {
+      color: #9499a8
+    }
+
+    .nps-category.detractors .nps-category-value {
+      color: var(--econ-red-dark)
+    }
+
+    .nps-bar-track {
+      background: rgba(0, 0, 0, .04);
+      border-radius: var(--r-full);
+      height: 28px;
+      display: flex;
+      overflow: hidden;
+      flex: 1;
+      min-width: 250px
+    }
+
+    .nps-bar-segment {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 1px 2px rgba(0, 0, 0, .2)
+    }
+
+    .nps-bar-segment.detractors {
+      background: linear-gradient(90deg, #c0392b 0%, #e74c3c 100%)
+    }
+
+    .nps-bar-segment.passives {
+      background: linear-gradient(90deg, #bdc3c7 0%, #d5d8dc 100%)
+    }
+
+    .nps-bar-segment.promoters {
+      background: linear-gradient(90deg, #0d6fbb 0%, #5dade2 100%)
+    }
+
+    .nps-bar-legend {
+      display: flex;
+      gap: 20px;
+      font-family: var(--sans);
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-top: 16px;
+      justify-content: flex-end;
+      flex-wrap: wrap
+    }
+
+    .nps-bar-legend-item {
+      display: flex;
+      align-items: center;
+      gap: 6px
+    }
+
+    .nps-bar-legend-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0
+    }
+
     /* LEADERBOARD */
     .lb-wrap {
       display: flex;
@@ -1320,7 +1470,7 @@
       { header: '¿Qué tan importante es para ti que una bebida te aporte refuerzo inmunitario, funcionalidad y bienestar?', type: 'bar', label: 'Importancia funcional' },
       { header: '¿Cuán probable es que compres la bebida Vit-Hit la próxima vez que vayas a la tienda o al super?', type: 'leaderboard', label: 'Intención de compra' },
       { header: '¿Hay algo que no te haya gustado?', type: 'bar', label: 'Aspectos negativos' },
-      { header: '¿Recomendarías a un amigo o familiar comprar los productos Huesitos?', type: 'vbar', label: 'Recomendación' },
+      { header: '¿Recomendarías a un amigo o familiar comprar el producto que has probado?', type: 'nps', label: 'Recomendación (NPS)' },
     ];
 
     // ── HELPERS ──
@@ -1557,15 +1707,18 @@
       const container = document.getElementById('chartsContainer'); container.innerHTML = '';
       let pairBuffer = null;
       QUESTIONS.forEach((q, qi) => {
-        if (q.type === 'vbar') {
+        let cardHtml;
+        if (q.type === 'nps') {
+          cardHtml = `<div class="card" style="margin-bottom:10px" id="qCard${qi}"><div class="card-inner"><div class="card-header"><div class="card-label">${q.label}</div><div class="card-question">${q.header}</div></div><div id="qChart${qi}" class="nps-container"></div></div></div>`;
+        } else if (q.type === 'vbar') {
           cardHtml = `<div class="card" style="margin-bottom:10px" id="qCard${qi}"><div class="card-inner"><div class="card-header"><div class="card-label">${q.label}</div><div class="card-question">${q.header}</div></div><div id="qChart${qi}Summary"></div><div class="chart-wrap h260"><canvas id="qChart${qi}"></canvas></div><div id="qChart${qi}Legend"></div></div></div>`;
         } else {
           const chartHeightClass = q.header.includes('no te haya gustado') ? 'h320' : 'h260';
           cardHtml = `<div class="card" style="margin-bottom:10px" id="qCard${qi}"><div class="card-inner"><div class="card-header"><div class="card-label">${q.label}</div><div class="card-question">${q.header}</div></div>${q.type === 'leaderboard' ? `<div class="lb-wrap" id="qChart${qi}"></div>` : `<div class="chart-wrap ${chartHeightClass}"><canvas id="qChart${qi}"></canvas></div>`}</div></div>`;
         }
 
-        // Group horizontal bars, leaderboards, or vertical bars in pairs
-        if (q.type === 'bar' || q.type === 'leaderboard' || q.type === 'vbar') {
+        // Group horizontal bars, leaderboards, or vertical bars in pairs (but not NPS)
+        if ((q.type === 'bar' || q.type === 'leaderboard' || q.type === 'vbar') && q.type !== 'nps') {
           if (!pairBuffer) { pairBuffer = { html: cardHtml, label: q.label } }
           else {
             const gridClass = (pairBuffer.label === 'Opinión del producto' && q.label === 'Valoración general') ? 'g-custom-split' : 'g2';
@@ -1717,6 +1870,68 @@
         } else if (q.type === 'vbar') {
           if (isNumericScale(raw)) { makeRatingBar(cid, raw) }
           else { const m = countSingle(raw); const e = sortedEntries(m, 10); if (e.length > 0) makeBar(cid, e.map(x => x[0]), e.map(x => x[1]), PAL_RED, false, true, true, false) }
+        } else if (q.type === 'nps') {
+          const npsEl = document.getElementById(cid); if (!npsEl) return;
+          // Parse as numeric 0–10 scale
+          const nums = raw.map(v => parseFloat(v)).filter(v => !isNaN(v) && v >= 0 && v <= 10);
+          if (nums.length === 0) return;
+          const total = nums.length;
+          const detractors = nums.filter(v => v <= 6).length;
+          const passives   = nums.filter(v => v >= 7 && v <= 8).length;
+          const promoters  = nums.filter(v => v >= 9).length;
+          const pDet = pct(detractors, total);
+          const pPas = pct(passives, total);
+          const pPro = pct(promoters, total);
+          const npsScore = pPro - pDet;
+          const npsBg = npsScore >= 50
+            ? 'linear-gradient(135deg,#006d4e 0%,#004d35 100%)'
+            : npsScore >= 0
+              ? 'linear-gradient(135deg,#0d6fbb 0%,#1a5276 100%)'
+              : 'linear-gradient(135deg,#c0392b 0%,#922b21 100%)';
+          const scoreLabel = npsScore >= 50 ? 'Excelente' : npsScore >= 20 ? 'Bueno' : npsScore >= 0 ? 'Aceptable' : 'Negativo';
+          npsEl.innerHTML = `
+            <div class="nps-metric-card" style="background:${npsBg}">
+              <div>
+                <div style="font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.75;margin-bottom:6px">NPS Score</div>
+                <div class="nps-metric-value">${npsScore > 0 ? '+' : ''}${npsScore}</div>
+              </div>
+              <div>
+                <div class="nps-metric-label">${scoreLabel}</div>
+                <div style="font-size:10px;opacity:.65;margin-top:4px">${total.toLocaleString('es-ES')} respuestas &middot; Escala 0&ndash;10</div>
+              </div>
+            </div>
+            <div style="flex:1;min-width:280px">
+              <div class="nps-categories">
+                <div class="nps-category detractors">
+                  <div class="nps-category-label">Detractores</div>
+                  <div class="nps-category-value">${pDet}%</div>
+                  <div class="nps-category-count">${detractors} personas &middot; puntuaci&oacute;n 0&ndash;6</div>
+                </div>
+                <div class="nps-category passives">
+                  <div class="nps-category-label">Pasivos</div>
+                  <div class="nps-category-value">${pPas}%</div>
+                  <div class="nps-category-count">${passives} personas &middot; puntuaci&oacute;n 7&ndash;8</div>
+                </div>
+                <div class="nps-category promoters">
+                  <div class="nps-category-label">Promotores</div>
+                  <div class="nps-category-value">${pPro}%</div>
+                  <div class="nps-category-count">${promoters} personas &middot; puntuaci&oacute;n 9&ndash;10</div>
+                </div>
+              </div>
+              <div style="margin-top:16px">
+                <div class="nps-bar-track">
+                  ${pDet > 0 ? `<div class="nps-bar-segment detractors" style="width:${pDet}%">${pDet >= 8 ? pDet+'%' : ''}</div>` : ''}
+                  ${pPas > 0 ? `<div class="nps-bar-segment passives" style="width:${pPas}%">${pPas >= 8 ? pPas+'%' : ''}</div>` : ''}
+                  ${pPro > 0 ? `<div class="nps-bar-segment promoters" style="width:${pPro}%">${pPro >= 8 ? pPro+'%' : ''}</div>` : ''}
+                </div>
+                <div class="nps-bar-legend">
+                  <div class="nps-bar-legend-item"><div class="nps-bar-legend-dot" style="background:#e74c3c"></div>Detractores (0&ndash;6)</div>
+                  <div class="nps-bar-legend-item"><div class="nps-bar-legend-dot" style="background:#bdc3c7"></div>Pasivos (7&ndash;8)</div>
+                  <div class="nps-bar-legend-item"><div class="nps-bar-legend-dot" style="background:#5dade2"></div>Promotores (9&ndash;10)</div>
+                </div>
+              </div>
+            </div>
+          `;
         } else if (q.type === 'leaderboard') {
           if (q.label === 'Opinión del producto') {
             const order = ['Mucho mejor de lo que esperaba', 'Algo mejor de lo que esperaba', 'Como lo esperaba', 'Peor de lo esperado', 'Peor de lo que esperaba', 'Mucho peor de lo esperado', 'Mucho peor de lo que esperaba'];
@@ -1753,36 +1968,34 @@
               makeLeaderboard(cid, labels, vals, false);
               const container = document.getElementById(cid);
               if (container) {
-                // Move chart down for better badge visibility
                 container.style.marginTop = '40px';
+                container.style.position = 'relative';
 
-                // Add badge in upper right
-                const badgeContainer = document.createElement('div');
-                badgeContainer.style.position = 'absolute';
-                badgeContainer.style.top = '-30px';
-                badgeContainer.style.right = '10px';
-                badgeContainer.style.zIndex = '10';
+                // Remove any stale badge/legend from a previous render
+                container.querySelectorAll('.compra-badge').forEach(el => el.remove());
+                container.parentNode.querySelectorAll('.compra-legend').forEach(el => el.remove());
+
+                // Badge (inside lb-wrap, positioned absolutely)
                 const potencialPct = pct(categories['Compradores Potenciales'], raw.length);
                 const benchmark = 40;
                 const variation = ((potencialPct - benchmark) / benchmark * 100).toFixed(0);
                 const color = variation >= 0 ? '#28a745' : '#dc3545';
                 const sign = variation > 0 ? '+' : '';
+                const badgeContainer = document.createElement('div');
+                badgeContainer.className = 'compra-badge';
+                badgeContainer.style.cssText = 'position:absolute;top:-30px;right:10px;z-index:10';
                 badgeContainer.innerHTML = `
-                  <span style="display: inline-flex; align-items: center; gap: 6px; background: rgba(255, 255, 255, 0.9); padding: 4px 8px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.1); white-space: nowrap; font-size: 11px;">
-                    <span style="font-weight: 700; color: var(--text-secondary);">vs Benchmark</span>
-                    <span style="color: ${color}; font-weight: 800;">${sign}${variation}%</span>
-                  </span>
-                `;
-                container.style.position = 'relative';
+                  <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,.9);padding:4px 8px;border-radius:20px;border:1px solid rgba(0,0,0,.1);white-space:nowrap;font-size:11px">
+                    <span style="font-weight:700;color:var(--text-secondary)">vs Benchmark</span>
+                    <span style="color:${color};font-weight:800">${sign}${variation}%</span>
+                  </span>`;
                 container.appendChild(badgeContainer);
 
-                // Add legend below the chart
+                // Legend (below the card, in card-inner)
                 const legend = document.createElement('div');
-                legend.style.marginTop = '10px';
-                legend.style.fontSize = '12px';
-                legend.style.color = '#666';
-                legend.style.textAlign = 'center';
-                legend.innerHTML = 'Benchmark en la categoría soft drinks 2025: 40%';
+                legend.className = 'compra-legend';
+                legend.style.cssText = 'margin-top:10px;font-size:11px;color:var(--text-tertiary);text-align:center';
+                legend.textContent = 'Benchmark en la categoría soft drinks 2025: 40%';
                 container.parentNode.appendChild(legend);
               }
             }
